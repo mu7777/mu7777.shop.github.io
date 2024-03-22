@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8" http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>mu's shop</title>
+        <style>
+            .main{
+                overflow:hidden;
+            }
+            .picture{
+                text-align: center;
+            }
+            .title {
+                color: red;
+            }
+            .menu {
+                /*2px 水色 破線を指定*/
+                border: 2px skyblue dashed;
+            }
+            #menu{
+                color: black;
+                font-family: serif;
+                font-size: 30px;
+                line-height:1;
+            }
+            .service {
+                /*2px 水色 破線を指定*/
+                border: 2px red dashed; 
+            }
+            .youtube{
+                border: 2px red dashed;
+            }
+            .support {
+                color: red;
+                font-size: 20px;
+            }
+        </style>
+        <script>
+            function check(){
+                if (support_form.mail.value == "" && support_form.support.value == ""){
+                    alert("メールアドレスとお問い合わせ内容が入力されていません");    //エラーメッセージを出力
+                    return false;    //送信ボタン本来の動作をキャンセルします
+                }
+                else if (support_form.mail.value== ""){
+                    alert("メールアドレスを入力してください");
+                    return false; 
+                }
+                else if (support_form.support.value == ""){
+                    //条件に一致する場合(メールアドレスが空の場合)
+                    alert("お問い合わせ内容を入力してください");    //エラーメッセージを出力
+                    return false;    //送信ボタン本来の動作をキャンセルします
+                }
+                else if (!support_form.mail.value.includes("@") || !support_form.mail.value.includes(".") || ((support_form.mail.value.match( /@/g ) || [] ).length)>=2 ) {
+                    alert("メールアドレスが不正です。もう一度ご確認ください")
+                    return false;
+                }
+                else if (support_form.support.value.includes("@everyone")) {
+                    alert("@everyoneしないでください。大変迷惑です。")
+                    return false;
+                }
+                else if (support_form.support.value.includes("<@953284875685859380>"||"<@1210213433031794710>")) {
+                    alert("メンションしないでください。大変迷惑です。")
+                    return false;
+                }
+                else{
+                    //条件に一致しない場合(メールアドレスが入力されている場合)
+                    console.log(support_form.support.value)
+                    const xhr = new XMLHttpRequest();
+                    xhr.open('POST',"https://discord.com/api/webhooks/1220811066938757152/Xu_OOUF7cg1YCGv9aOu19XLCIDVgixNAtNkKSbSUKPP--i4DH7klnwOS93pc_rbucpt7");
+                    xhr.setRequestHeader('Content-type', 'application/json');
+                    // フォームに入力した値をリクエストとして設定
+                    var request = {"username": support_form.mail.value,"content": support_form.support.value}
+                    xhr.send(JSON.stringify(request));
+                    alert("送信に成功しました");
+                    return true;    //送信ボタン本来の動作を実行します
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <div class="main">
+            <a href="">
+                <img class="picture" src="https://github.com/mu7777/picture_storage/blob/main/icon.png?raw=true">
+            </a>
+            <ul class="menu">
+                <h3 id="menu">MENU</h3>
+                <li><a href="C:\Users\takat\Downloads\tsumtsum.html">ツムツム</a></li>
+                <li>にゃんこ大戦争</li>
+                <li>カーパーキング</li>
+                <li>妖怪ウォッチバスターズ</li>
+            </ul>
+            <ul class="service">
+                <h3 id="menu">対応可能チャットアプリ</h3>
+                <p>できればdiscordがいいです</p>
+                <li><a href="https://discord.gg/mu-shop">Discordサーバー</a></li>
+                <!--<li><a href="https://liff.line.me/1645278921-kWRPP32q/?accountId=538xqswp">公式LINE</a></li>-->
+                <li><a href="https://twitter.com/mu_7777dayo">X(twitter)のDM</a></li>
+                <li><a href="https://www.instagram.com/punipuni_daikou7777/">instagramのDM</a></li>
+            </ul>
+            <ul class="youtube">
+                <h3 id="menu">ぜひ見てください</h3>
+                <li><a href="https://www.youtube.com/@mu_xyz">youtube</a></li>
+            </ul>
+            <form name="support_form">
+                <label for="support" class="support">お問い合わせ</label>
+                <br>
+                <label>メールアドレス</label>
+                <input type="text" name="mail" required maxlength="30" cols="10">
+                <br>
+                <label>要件</label>
+                <br>
+                <textarea type="text" name="support" required maxlength="1000" cols="40" rows="8"></textarea>
+                <input type="submit" value="送信" onClick="return check();">
+            </form>
+        </div>
+    </body>
+</html>
